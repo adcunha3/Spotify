@@ -56,24 +56,4 @@ router.delete("/:id", async (req, res) => {
 
 });
 
-// remove song from playlist
-// router.post("/remove-song", async (req, res) => {
-
-//     try{
-        
-//         const user = await User.findById(req.user._id);
-//         const playlist = await PlayList.findById(req.body.playlistId);
-
-    
-//         const index = playlist.songs.indexOf(req.body.songId);
-//         playlist.songs.splice(index, 1);
-//         await playlist.save();
-//         res.status(200).send({ data: playlist, message: "Removed from playlist" });
-
-//     } catch(err) {
-// 		res.json({ status: 'error'});
-// 	}
-
-// });
-
 module.exports = router;

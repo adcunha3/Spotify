@@ -4,8 +4,6 @@ const { PlayList } = require("../models/playlist.model");
 const {ObjectId} = require('mongodb');
 const { User } = require("../models/user.model");
 const { Song } = require("../models/song.model");
-const mongoose = require('mongoose');
-const db = mongoose.connection;
 
 // create playlist
 router.post("/create", async (req, res) => {
