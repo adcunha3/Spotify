@@ -20,17 +20,23 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-	const user = await User.findOne({
-		email: req.body.email,
-		//password: req.body.password
-	})
+	try {
+		const user = await User.findOne({
+			email: req.body.email,
+			//password: req.body.password
+		})
+	
+		if (user) {
+			return res.send(user)
+			//return res.json({status: 'ok', user: true})
+		} else {
+			return res.json({status: error, user: false})
+		}
 
-	if (user) {
-		return res.send(user)
-		//return res.json({status: 'ok', user: true})
-	} else {
-		return res.json({status: error, user: false})
+	} catch (err) {
+		res.json({ status: 'error', error: 'Duplicate email' })
 	}
+
 
 	// if (!user) {
 	// 	return { status: 'error', error: 'Invalid login' }

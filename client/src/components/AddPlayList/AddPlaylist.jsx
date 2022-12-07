@@ -1,10 +1,10 @@
 import React, { useEffect, useState} from 'react'
 import axios from 'axios';
-import {Link} from 'react-router-dom'
-import firebaseApp from '../firebase/firebase';
-import useFetch from 'react-fetch-hook';
+import firebaseApp from '../../firebase/firebase';
+import PlayList from '../PlayList/PlayList';
+import './AddPlaylist.css'
 
-function CreateArea() {
+function AddPlaylist() {
 
     const [playlist, setPlaylist] = useState({
         name: '',
@@ -12,6 +12,7 @@ function CreateArea() {
     });
     
     const [user, setUser] = useState('');
+    const [playlists, setPlaylists] = useState([]);
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -24,8 +25,9 @@ function CreateArea() {
         });
       }
 
+
+
     useEffect(() => {
-      
         var user_email = firebaseApp.auth().currentUser.email;
         console.log(user_email);
     
@@ -33,19 +35,15 @@ function CreateArea() {
           console.log(res.data._id);
           setUser(res.data._id);
         })
-      
     }, [])
 
-    const create_playlist = async () => {
+    const create_playlist = async (event) => {
         axios.post('http://localhost:3001/api/playlists/create', {user: user, name: playlist.name, desc: playlist.desc}).then((res) => {
-            console.log(res);
+            console.log(res.data.data.name);
+            setPlaylists(arr => [...arr, res.data.data.name]);
         })
-    }
-
-    const display_playlist = async () => {
-      axios.post('http://localhost:3001/api/playlists/favourite', {user: user}).then((res) => {
-        console.log(res)
-      })
+        console.log(playlists)
+        event.preventDefault();
     }
 
     return (
@@ -58,23 +56,19 @@ function CreateArea() {
                 <button type='submit'>Confirm</button>
             </form>
         </div>
-        <button onClick={display_playlist}>TEST BTN</button>
-        {/* <div>
-          {playlists ? playlists.map((playlist) => {
-                      return (
-                          <div>
-                              <Link to={''}>
-                                  <button>
-                                      {playlists}
-                                  </button>
-                              </Link>
-                          </div>
-                      );
-          }): null}
-        </div> */}
+                      
+        <div>
+          {playlists ? playlists.map((item, index) => {
+              return (
+
+                  <PlayList key={index} name={item}/> 
+
+              );
+            }): null}
+        </div>
 
       </div>
     )
 }
 
-export default CreateArea;
+export default AddPlaylist;
