@@ -71,7 +71,7 @@ router.post("/remove-song", async (req, res) => {
 		
 	}catch(err) {
 				res.json({ status: 'error'});
-			}
+	}
 
 });
 
