@@ -64,7 +64,7 @@ function AddSong() {
                 {display ? display.map((item, index) => {
                     return (
 
-                        <Song key={index} name={item} track={songid}/> 
+                        <Song key={index} name={item} track={songid} playlist={id}/> 
 
                     );
                 }): null}
