@@ -7,8 +7,7 @@ const userSchema = new mongoose.Schema(
 		password: { type: String, required: true },
 		likedSongs: { type: [String], default: [] },
 		playlists: { type: [String], default: [] },
-		quote: { type: String },
-	},
+		quote: { type: String },	},
 	{ collection: 'user-data' }
 )
 

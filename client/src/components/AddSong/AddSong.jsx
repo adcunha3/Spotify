@@ -1,18 +1,21 @@
 import React, { useState, useEffect} from 'react'
 import axios from "axios";
 import firebaseApp from '../../firebase/firebase';
-import {Link,useParams} from 'react-router-dom'
+import {Link,useParams, useNavigate} from 'react-router-dom'
 import Song from '../Song/Song';
 import './AddSong.css'
 
 function AddSong() {
 
     const {id} = useParams();
+    const navigate = useNavigate();
 
     const [playlistid, setPlaylistid] = useState('');
     const [track_title, setTrack_title] = useState('');
     const [songid, setSongid] = useState('');
     const [display, setDisplay] = useState([]);
+
+    var user = firebaseApp.auth().currentUser.email;
 
     useEffect(() => {
 
@@ -23,7 +26,7 @@ function AddSong() {
 
     }, []);
 
-    const delete_playlist = () => {
+    const delete_playlist = (event) => {
 
         var user_email = firebaseApp.auth().currentUser.email;
         console.log(user_email);
@@ -32,15 +35,16 @@ function AddSong() {
             console.log(res.data);
             
         })
+        event.preventDefault()
     }
 
-    const add_song = async () => {
+    const add_song = async (event) => {
         await axios.post('http://localhost:3001/api/songs/add-song', {playlistid, track_title}).then((res) => {
             console.log(res.data.data)
             setDisplay(arr => [...arr, track_title])
             setSongid(res.data.data.songs[0]);
-            //console.log(res.data.songs[0]._id)
         })
+        event.preventDefault()
     }
 
 
@@ -64,15 +68,24 @@ function AddSong() {
                 {display ? display.map((item, index) => {
                     return (
 
-                        <Song key={index} name={item} track={songid} playlist={id}/> 
+                        <Song key={index} name={item} track={songid} playlist={id} user={user}/> 
 
                     );
                 }): null}
             </ul>
 
 
-            <Link to={'/dashboard'}>Return</Link>
+            {/* <Link to={'/dashboard'}>Return</Link> */}
+            <button onClick={(event) => {
+                navigate('/dashboard');
+                event.preventDefault()
+            }}>Return</button>
+
             <Link to={'/dashboard'}><button onClick={delete_playlist}>Delete Playlist</button></Link>
+
+            
+             
+            
 
         </div>
     )

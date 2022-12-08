@@ -37,7 +37,7 @@ router.post("/add-song", async (req, res) => {
 // 		res.json({ status: 'error'})
 // 	}
 
-// });
+// })
 
 // remove song from playlist
 // router.delete("/:id", async (req, res) => {
@@ -61,15 +61,18 @@ router.post("/add-song", async (req, res) => {
 
 // remove song from playlist
 router.post("/remove-song", async (req, res) => {
-	const user = await User.findById(ObjectId(req.body.user));
-	const playlist = await PlayList.findById(ObjectId(req.body.playlist_id));
-
-	if (user._id === playlist.user) {
-		const index = playlist.songs.indexOf(req.body.song_id);
-		playlist.songs.splice(index, 1);
-		await playlist.save();
+	try {
+		const user = await User.find({email: req.body.user_id});
+		const playlist = await PlayList.find({name: req.body.playlist_id});
+		const index = playlist[0].songs.indexOf((req.body.song_id));
+		playlist[0].songs.splice(index, 1);
+		await playlist[0].save();
 		res.status(200).send({ data: playlist, message: "Removed from playlist" });
-	}
+		
+	}catch(err) {
+				res.json({ status: 'error'});
+			}
+
 });
 
 module.exports = router;
