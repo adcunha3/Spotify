@@ -3,6 +3,8 @@ import axios from 'axios';
 import firebaseApp from '../../firebase/firebase';
 import PlayList from '../PlayList/PlayList';
 import './AddPlaylist.css'
+import {localStorage} from 'react-dom';
+import Table from '../Table'
 
 function AddPlaylist() {
 
@@ -49,6 +51,8 @@ function AddPlaylist() {
     return (
       <div>
 
+        <Table/>
+
         <div>
             <form className='create-note' onSubmit={create_playlist}>
                 <input type='text' name='name' value={playlist.name} onChange={handleChange}/>
@@ -61,7 +65,7 @@ function AddPlaylist() {
           {playlists ? playlists.map((item, index) => {
               return (
 
-                  <PlayList key={index} name={item}/> 
+                  <PlayList key={index} name={item} desc={playlist.desc}/> 
 
               );
             }): null}

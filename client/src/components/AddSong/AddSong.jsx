@@ -75,11 +75,7 @@ function AddSong() {
             </ul>
 
 
-            {/* <Link to={'/dashboard'}>Return</Link> */}
-            <button onClick={(event) => {
-                navigate('/dashboard');
-                event.preventDefault()
-            }}>Return</button>
+            <Link to={'/dashboard'}>Return</Link>
 
             <Link to={'/dashboard'}><button onClick={delete_playlist}>Delete Playlist</button></Link>
 

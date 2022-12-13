@@ -11,6 +11,7 @@ function PlayList(props) {
     <div className="note">
     <Link to={'/add-songs/' + props.name}>
       <h1>{props.name}</h1>
+      <p>{props.desc}</p>
     </Link>
     </div>
   );

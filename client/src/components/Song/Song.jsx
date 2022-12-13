@@ -10,7 +10,7 @@ function Song(props) {
     const song_id = props.track;
     const user_id = props.user;
 
-    const [deleteSong, setDeleteSong] = useState(false);
+    const [deleteSong, setDeleteSong] = useState([props.name]);
 
 
     const delete_song = async () => {
@@ -25,6 +25,8 @@ function Song(props) {
             }
         })
     }
+
+
 
     /*
 
