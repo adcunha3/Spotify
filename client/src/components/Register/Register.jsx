@@ -16,7 +16,7 @@ function Register() {
 
       await firebaseApp.auth().createUserWithEmailAndPassword(email, password);
   
-      const response = await fetch('http://ec2-3-86-189-202.compute-1.amazonaws.com:3001/api/users/register', {
+      const response = await fetch('http://ec2-44-210-141-198.compute-1.amazonaws.com:3001/api/users/register', {
         method: 'POST',
         headers: {'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password }),
